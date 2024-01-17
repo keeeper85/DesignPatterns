@@ -34,6 +34,10 @@ public class Observer {
             }
             else {
                 hp -= damage;
+                if (hp <= 0) {
+                    System.out.println("Czarodziej: Już po mnie! Żegnaj okrutny świecie!");
+                    return;
+                }
                 System.out.println("Czarodziej: Jestem ranny! Zostało mi tylko " + hp + "hp!");
                 setChanged();
                 notifyObservers();
@@ -49,7 +53,7 @@ public class Observer {
         }
         @Override
         public void update(Observable o, Object arg) {
-            Character character = null;
+            Character character;
             if (o instanceof Character) {
                 character = (Character) o;
                 heal(character);
