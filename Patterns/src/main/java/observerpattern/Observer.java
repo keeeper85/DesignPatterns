@@ -15,18 +15,26 @@ public class Observer {
         orc.meleeAttack(wizard);
     }
 
+    static class Character extends Observable{
+        int hp = 10;
+        void takeDamage(int damage){
+            hp -= damage;
+            System.out.println(hp);
+        }
+    }
+
     static class Wizard extends Character {
         int stoneSkins = 1;
 
         @Override
         public void takeDamage(int damage) {
             if (stoneSkins > 0){
-                System.out.println("Czrodziej: Kamienna skóra zatrzymała obrażenia. Aktualne punkty życia: " + hp + "hp.");
+                System.out.println("Czarodziej: Kamienna skóra zatrzymała obrażenia. Aktualne punkty życia: " + hp + "hp.");
                 stoneSkins--;
             }
             else {
                 hp -= damage;
-                System.out.println("Czrodziej: Jestem ranny! Zostało mi tylko " + hp + "hp!");
+                System.out.println("Czarodziej: Jestem ranny! Zostało mi tylko " + hp + "hp!");
                 setChanged();
                 notifyObservers();
             }
@@ -52,6 +60,7 @@ public class Observer {
     }
 
     static class Orc extends Character{
+        int damage = 7;
         void meleeAttack(Character character){
             Wizard wizard;
             if (character instanceof Wizard){
@@ -61,8 +70,8 @@ public class Observer {
                     character.takeDamage(0);
                 }
                 else {
-                    System.out.println("Ork: Atakuje " + character.getClass().getSimpleName());
-                    character.takeDamage(7);
+                    System.out.println("Ork: Atakuje " + character.getClass().getSimpleName() + " za " + damage + " obrażeń.");
+                    character.takeDamage(damage);
                 }
             }
         }
@@ -74,14 +83,6 @@ public class Observer {
     interface Spell{
         void castSpell(Character character);
         String toString();
-    }
-
-    static class Character extends Observable{
-        int hp = 10;
-        void takeDamage(int damage){
-            hp -= damage;
-            System.out.println(hp);
-        }
     }
 
     static class Contingency implements Spell, java.util.Observer {
