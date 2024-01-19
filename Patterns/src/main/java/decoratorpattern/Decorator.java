@@ -1,5 +1,7 @@
 package decoratorpattern;
 
+import java.io.*;
+
 public class Decorator {
 
     public static void main(String[] args) {
@@ -14,7 +16,6 @@ public class Decorator {
     }
 
     static class Warrior implements Spellcaster{
-
         @Override
         public void castSpell() {
             System.out.println("Wojownik rzuca czar:");
@@ -24,7 +25,6 @@ public class Decorator {
     static class InvisibilityRing implements Spellcaster{
 
         Spellcaster spellcaster;
-
         public InvisibilityRing(Spellcaster spellcaster) {
             this.spellcaster = spellcaster;
         }
