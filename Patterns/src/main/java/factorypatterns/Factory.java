@@ -39,7 +39,8 @@ public class Factory {
         }
     }
 
-    static abstract class SummonFactory{
+
+    static abstract class SummonFactory{  // abstract factory interface
         List<SummonedAlly> summons = new ArrayList<>();
 
         void summonAllies(){
@@ -49,7 +50,7 @@ public class Factory {
                 summon.introduceSelf();
             }
         }
-        abstract void createSummons();
+        abstract void createSummons(); //factory method
     }
 
     static class WizardSummonFactory extends SummonFactory{
