@@ -12,21 +12,20 @@ public class Command {
         Paralyze paralyze = new Paralyze();
 
         wizard.currentCommand = fireBall;
-        wizard.castSpell(iceGiant);
+        wizard.addToSequencer(iceGiant);
         wizard.currentCommand = paralyze;
-        wizard.castSpell(iceGiant);
+        wizard.addToSequencer(iceGiant);
         wizard.currentCommand = fireBall;
-        wizard.castSpell(iceGiant);
-        wizard.loadGame();
+        wizard.addToSequencer(iceGiant);
+        wizard.fireSequencer();
 
 //        wizard.currentCommand = fireBall;
-//        wizard.addToSequencer(iceGiant);
+//        wizard.castSpell(iceGiant);
 //        wizard.currentCommand = paralyze;
-//        wizard.addToSequencer(iceGiant);
+//        wizard.castSpell(iceGiant);
 //        wizard.currentCommand = fireBall;
-//        wizard.addToSequencer(iceGiant);
-//        wizard.fireSequencer();
-
+//        wizard.castSpell(iceGiant);
+//        wizard.loadGame();
     }
 
     static class Wizard{
@@ -55,6 +54,7 @@ public class Command {
         }
 
         void fireSequencer(){
+            System.out.println("Odpalono sekwencer zaklęć:");
             for (Commands command : allCommands) {
                 command.engage(currentEnemy);
             }
