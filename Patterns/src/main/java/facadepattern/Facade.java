@@ -139,5 +139,6 @@ public class Facade {
             cleric.castSpell(warrior,rogue,ranger,druid,cleric,wizard);
             wizard.castSpell(warrior,rogue,ranger,druid,cleric,wizard);
         }
+
     }
 }
