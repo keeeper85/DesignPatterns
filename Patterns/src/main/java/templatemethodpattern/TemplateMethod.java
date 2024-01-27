@@ -14,7 +14,6 @@ public class TemplateMethod {
         cleric.macro(withUmberHulks);
         System.out.println("-----------");
         cleric.macro(withMages);
-
     }
 
     static abstract class BattlePreparation{
@@ -26,55 +25,45 @@ public class TemplateMethod {
             customDefensiveBuff();
             extraSpell();
         }
-
         protected abstract void macroName();
-
-        protected void extraSpell() {
-
-        }
-
+        protected void extraSpell() {}
         protected void summon(){
             System.out.println("(Kapłan) Rzuca czar: 'Przyzwanie powietrznego sługi'");
         }
-
         protected abstract void customDefensiveBuff();
-
         private void blessing() {
             System.out.println("(Kapłan) Rzuca czar: 'Błogosławieństwo'");
         }
-
     }
 
     static class BattleWithVampires extends BattlePreparation{
-
         @Override
         protected void customDefensiveBuff() {
             System.out.println("(Kapłan) Rzuca czar: 'Ochrona przed negatywną energią'");
         }
-
         @Override
         protected void macroName() {
             System.out.println("(Makro) Walka z Wampirami:");
         }
-
         @Override
         protected void summon() {
             System.out.println("(Kapłan) Korzysta ze zwoju: 'Przyzwanie zwierząt III'");
         }
+        @Override
+        protected void extraSpell() {
+            System.out.println("(Kapłan) Odstraszanie nieumarłych: włączone.");
+        }
     }
 
     static class BattleWithUmberHulks extends BattlePreparation{
-
         @Override
         protected void customDefensiveBuff() {
             System.out.println("(Kapłan) Rzuca czar: 'Chaotyczne rozkazy'");
         }
-
         @Override
         protected void extraSpell() {
             System.out.println("(Kapłan) Rzuca czar: 'Siła jedności'");
         }
-
         @Override
         protected void macroName() {
             System.out.println("(Makro) Walka z Umbrowymi kolosami:");
@@ -91,7 +80,6 @@ public class TemplateMethod {
         protected void summon() {
             System.out.println("(Kapłan) Korzysta ze artefaktu: 'Przyzwanie kamiennego golema'");
         }
-
         @Override
         protected void macroName() {
             System.out.println("(Makro) Walka z magami:");
@@ -103,6 +91,4 @@ public class TemplateMethod {
             battlePreparation.prepareForBattle();
         }
     }
-
-
 }
