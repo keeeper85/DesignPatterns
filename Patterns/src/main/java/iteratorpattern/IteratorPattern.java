@@ -17,21 +17,34 @@ public class IteratorPattern {
 //            System.out.println(weapon);
 //        }
 
-        Iterator<String> elixirIterator = elixirStore.getIterator();
-        Iterator<String> weaponIterator = weaponShop.getIterator();
-
-        GeneralStore generalStore = new GeneralStore(elixirIterator, weaponIterator);
-        generalStore.printOffer();
+        new GeneralStore(elixirStore.getIterator(), weaponShop.getIterator()).printOffer();
     }
+    static class GeneralStore{
+        Iterator<?>[] iterators;
 
+        public GeneralStore(Iterator<?>... iterators) {
+            this.iterators = iterators;
+        }
+        void printOffer(){
+            for (Iterator<?> iterator : iterators) {
+                printOffer(iterator);
+            }
+        }
+        void printOffer(Iterator<?> iterator){
+            while (iterator.hasNext()){
+                System.out.println(iterator.next());
+            }
+        }
+    }
     static class ElixirStore{
-        String[] elixirs = new String[5];
+        String[] elixirs = new String[6];
         public ElixirStore() {
-            elixirs[0] = "Mikstura regeneracji zdrowia";
-            elixirs[1] = "Mikstura regeneracji many";
-            elixirs[2] = "Eliksir inteligencji";
-            elixirs[3] = "Eliksir siły";
-            elixirs[4] = "Eliksir zręczności";
+            elixirs[0] = "Mała mikstura regeneracji zdrowia";
+            elixirs[1] = "Średnia mikstura regeneracji zdrowia";
+            elixirs[2] = "Duża mikstura regeneracji zdrowia";
+            elixirs[3] = "Mała mikstura regeneracji many";
+            elixirs[4] = "Średnia mikstura regeneracji many";
+            elixirs[5] = "Duża mikstura regeneracji many";
         }
         Iterator<String> getIterator(){
             return new ElixirStoreIterator(elixirs);
@@ -82,23 +95,6 @@ public class IteratorPattern {
         }
         Iterator<String> getIterator(){
             return weapons.iterator();
-        }
-    }
-    static class GeneralStore{
-        Iterator<?>[] iterators;
-
-        public GeneralStore(Iterator<?>... iterators) {
-            this.iterators = iterators;
-        }
-        void printOffer(){
-            for (Iterator<?> iterator : iterators) {
-                printOffer(iterator);
-            }
-        }
-        void printOffer(Iterator<?> iterator){
-            while (iterator.hasNext()){
-                System.out.println(iterator.next());
-            }
         }
     }
 }
