@@ -11,15 +11,34 @@ public class Composite {
         compositeSpell.spells.add(new StoneSkin());
         compositeSpell.spells.add(new SummonAirElemental());
 
-        new Wizard().castSpell(compositeSpell);
+        Wizard wizard = new Wizard();
+        wizard.castSpell(compositeSpell);
+        wizard.unsummon();
     }
     interface Spell{
         void castSpell();
+        void unsummon();
+    }
+    static class SummonAirElemental implements Spell{
+        @Override
+        public void castSpell() {
+            System.out.print("'Przyzwanie żywiołaka powietrza' ");
+        }
+
+        @Override
+        public void unsummon() {
+            System.out.println("Żywiołak powietrza - odesłano. ");
+        }
     }
     static class FireShield implements Spell{
         @Override
         public void castSpell() {
             System.out.print("'Ognista tarcza' ");
+        }
+
+        @Override
+        public void unsummon() {
+            throw new UnsupportedOperationException();
         }
     }
     static class StoneSkin implements Spell{
@@ -27,11 +46,10 @@ public class Composite {
         public void castSpell() {
             System.out.print("'Kamienna skóra' ");
         }
-    }
-    static class SummonAirElemental implements Spell{
+
         @Override
-        public void castSpell() {
-            System.out.print("'Przyzwanie żywiołaka powietrza' ");
+        public void unsummon() {
+            throw new UnsupportedOperationException();
         }
     }
     static class CompositeSpell implements Spell{
@@ -42,11 +60,25 @@ public class Composite {
                 spell.castSpell();
             }
         }
+        @Override
+        public void unsummon() {
+            for (Spell spell : spells) {
+                try{
+                    spell.unsummon();
+                } catch (UnsupportedOperationException ignored){}
+            }
+        }
     }
     static class Wizard{
+        Spell spell;
         void castSpell(Spell spell){
+            this.spell = spell;
             System.out.print("(Czarodziej) Rzuca czar(y): ");
             spell.castSpell();
+        }
+        void unsummon(){
+            System.out.print("\n(Czarodziej) ");
+            spell.unsummon();
         }
     }
 }
