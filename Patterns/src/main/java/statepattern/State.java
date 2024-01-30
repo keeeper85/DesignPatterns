@@ -14,10 +14,10 @@ public class State {
         Enemy bigBoss = new BigBoss();
 
         warrior.attack(bigBoss);
+
     }
     interface Phase{
         void retaliate(Enemy user, Character target);
-        void useSkill();
     }
     interface Character{
         void attack(Enemy target);
@@ -25,14 +25,13 @@ public class State {
         void takeMultipleHits(int... damage);
     }
     static class Warrior implements Character{
-        int damage = 20;
         int hp = 200;
         Enemy enemy;
         @Override
         public void attack(Enemy target) {
             enemy = target;
             System.out.println(BLUE + "(Wojownik) Atakuje wroga: " + target.toString() + RESET);
-            target.takeDamage(this, damage);
+            target.takeDamage(this, getDamage());
         }
         @Override
         public void takeDamage(int damage) {
@@ -70,6 +69,10 @@ public class State {
                 attack(enemy);
             }
         }
+        int getDamage(){
+            int damage = (int) (Math.random() * 60 + 10);
+            return damage;
+        }
     }
     interface Enemy{
         void takeDamage(Character source, int damage);
@@ -87,7 +90,7 @@ public class State {
         @Override
         public void takeDamage(Character source, int damage) {
             hp -= damage;
-            if (hp >= 20){
+            if (hp >= 0){
                 System.out.println("(Boss) Otrzymano obrażenia: " + damage + ". Aktualne punkty życia: " + hp);
                 currentPhase.retaliate(this, source);
             }
@@ -117,14 +120,11 @@ public class State {
                 stateJustChanged = true;
                 System.out.println(RED + "(Boss) Ha ha ha! Twoje żałosne ataki nie wyrządzą mi żadnej krzywdy!" + RESET);
             }
-            if (user.getHp() < 150 && user.getHp() >= 70){
+            if (user.getHp() < 150){
                 user.setPhase(new PhaseTwo());
             }
             System.out.println(RED + "(Boss) Teraz moja kolej!" + RESET);
             target.takeDamage(20);
-        }
-        @Override
-        public void useSkill() {
         }
     }
     static class PhaseTwo implements Phase{
@@ -137,12 +137,11 @@ public class State {
                 stateJustChanged = true;
                 System.out.println(RED + "(Boss) No to teraz mnie wkurzyłeś! Nietoperze, zająć się nim!" + RESET);
             }
-            if (user.getHp() < 70 && user.getHp() >= 20){
+            if (user.getHp() < 80){
                 user.setPhase(new PhaseThree());
             }
             useSkill();
         }
-        @Override
         public void useSkill() {
             System.out.println(YELLOW + "(Boss) Używa umiejętności: 'Atak roju nietoperzy'" + RESET);
             int attack_1 = (int) (Math.random() * 10) + 1;
@@ -165,7 +164,6 @@ public class State {
             System.out.println(RED + "(Boss) Już po tobie!" + RESET);
             useSkill();
         }
-        @Override
         public void useSkill() {
             System.out.println(YELLOW + "(Boss) Używa umiejętności: 'Atak kończący'" + RESET);
             target.takeDamage(100);
