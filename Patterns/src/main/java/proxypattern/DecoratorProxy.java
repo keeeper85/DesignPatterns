@@ -8,8 +8,9 @@ public class DecoratorProxy {
         Character rogue = new Rogue();
         Treasure treasure = new Chest();
 
-//        treasure.open(wizard);
-//        treasure.open(rogue);
+        treasure.open(wizard);
+        treasure.open(rogue);
+        System.out.println("--------------------");
 
         Treasure lockedTreasure = new LockedChest(treasure);
         lockedTreasure.open(wizard);
