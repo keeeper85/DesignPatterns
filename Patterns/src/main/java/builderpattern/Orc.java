@@ -36,32 +36,26 @@ public class Orc {
         private double attackSpeed = 1.00;
         private String rank = "zwykły ork";
         private Builder.Attack attack = new Builder.NormalAttack();
-
         public OrcBuilder setStrength(int strength) {
             this.strength = strength;
             return this;
         }
-
         public OrcBuilder setHp(int hp) {
             this.hp = hp;
             return this;
         }
-
         public OrcBuilder setAttackSpeed(double attackSpeed) {
             this.attackSpeed = attackSpeed;
             return this;
         }
-
         public OrcBuilder setRank(String rank) {
             this.rank = rank;
             return this;
         }
-
         public OrcBuilder setAttack(Builder.Attack attack) {
             this.attack = attack;
             return this;
         }
-
         public Orc build(){
             return new Orc(this);
         }
