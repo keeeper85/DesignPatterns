@@ -1,9 +1,23 @@
 package chainofresponsibilitypattern;
 
 public class ChainOfResponsibilityEasy {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
     public static void main(String[] args) {
-        Barbarian barbarian = new Barbarian(11);
-        barbarian.setEnemy(new Goblin(new OrcWarlord(new TrollKing(null))));
+        Barbarian barbarianLv1 = new Barbarian(1);
+        barbarianLv1.setEnemy(new Goblin(new OrcWarlord(new TrollKing(null))));
+        System.out.println("---------------");
+
+        Barbarian barbarianLv4 = new Barbarian(4);
+        barbarianLv4.setEnemy(new Goblin(new OrcWarlord(new TrollKing(null))));
+        System.out.println("---------------");
+
+        Barbarian barbarianLv8 = new Barbarian(8);
+        barbarianLv8.setEnemy(new Goblin(new OrcWarlord(new TrollKing(null))));
+        System.out.println("---------------");
+
+        Barbarian barbarianLv11 = new Barbarian(11);
+        barbarianLv11.setEnemy(new Goblin(new OrcWarlord(new TrollKing(null))));
     }
     static class Barbarian{
         int level;
@@ -12,15 +26,19 @@ public class ChainOfResponsibilityEasy {
             this.level = level;
         }
         public void attack (){
-            if (enemy == null) System.out.println("Barbarzyńca: Zwycięstwo!");
+            if (enemy == null) System.out.println(RED + this + "Zwycięstwo!" + RESET);
             else {
-                System.out.println("Barbarzyńca: Atakuje " + enemy);
+                System.out.println(RED + this + "Atakuje " + enemy + RESET);
                 enemy.defend(this);
             }
         }
         public void setEnemy(Enemy enemy) {
             this.enemy = enemy;
             attack();
+        }
+        @Override
+        public String toString() {
+            return "Barbarzyńca (poziom " + level + "): ";
         }
     }
     interface Enemy{
@@ -71,7 +89,7 @@ public class ChainOfResponsibilityEasy {
         }
         @Override
         public void defend(Barbarian barbarian) {
-            if (barbarian.level <= 9) System.out.println("Szef Orków: Dam mu radę sam!");
+            if (barbarian.level <= 9) System.out.println("Król Trolli: Dam mu radę sam!");
             else {
                 System.out.println("Król Trolli: Nie damy mu rady!");
                 barbarian.setEnemy(nextEnemy);

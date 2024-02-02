@@ -4,18 +4,16 @@ public class ChainOfResponsibility {
 
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
 
     public static void main(String[] args) {
-        Hero barbarian = new Barbarian(10);
+        Hero barbarian = new Barbarian(9);
         Enemy goblin = new Goblin();
 
         barbarian.attack(goblin);
     }
-
     interface Hero {
         void attack(Enemy enemy);
         void takeDamage(Enemy enemy, int damage);
@@ -30,6 +28,7 @@ public class ChainOfResponsibility {
             this.level = level;
             hp = 20 * level;
             power = 10 * level;
+            System.out.println(this + " Info: lv" + level + ", " + hp + "hp");
         }
         @Override
         public void attack(Enemy enemy) {
@@ -42,16 +41,16 @@ public class ChainOfResponsibility {
         @Override
         public void takeDamage(Enemy enemy, int damage) {
             target = enemy;
-            if (defensiveSkill()) {
+            if (isEvadeSkillTriggered()) {
                 System.out.println(this + " Udało się uniknąć ataku!");
                 attack(target);
             }
             else {
                 hp -= damage;
-                System.out.println(this + " Otrzymano obażenia " + damage + " Pozostało " + hp + " punktów życia.");
+                System.out.println(this + " Otrzymano obrażenia " + damage + " Pozostało " + hp + " punktów życia.");
                 if (!isDefeated()) attack(target);
                 else {
-                    System.out.println(this + " Jeszcze tu wrócę!");
+                    System.out.println(this + " Umieram!");
                     System.exit(0);
                 }
             }
@@ -60,7 +59,7 @@ public class ChainOfResponsibility {
             if (hp > 0) return false;
             return true;
         }
-        private boolean defensiveSkill() {
+        private boolean isEvadeSkillTriggered() {
             int random = (int) (Math.random() * 100);
             if (level > 6 && random > 60) return true;
             return false;
@@ -108,7 +107,7 @@ public class ChainOfResponsibility {
 
         @Override
         void takeDamage(Hero source, int damage) {
-            System.out.println(this + " Otrzymano obażenia " + damage);
+            System.out.println(this + " Otrzymano obrażenia " + damage);
             target = source;
             hp -= damage;
             checkHp();
@@ -150,7 +149,7 @@ public class ChainOfResponsibility {
 
         @Override
         void takeDamage(Hero source, int damage) {
-            System.out.println(this + " Otrzymano obażenia " + damage);
+            System.out.println(this + " Otrzymano obrażenia " + damage);
             target = source;
             hp -= damage;
             checkHp();
@@ -191,7 +190,7 @@ public class ChainOfResponsibility {
 
         @Override
         void takeDamage(Hero source, int damage) {
-            System.out.println(this + " Otrzymano obażenia " + damage);
+            System.out.println(this + " Otrzymano obrażenia " + damage);
             target = source;
             hp -= damage;
             checkHp();
