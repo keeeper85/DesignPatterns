@@ -2,6 +2,7 @@
 Repository with examples of popular design patterns, updated in paralel with reading Head First: Design Patterns book.
 
 Each pattern described (in Polish language) at my website:
+
 https://wwsj.xyu.pl/wwsj/uncategorized/wzorce-projektowe-strategy/
 
 https://wwsj.xyu.pl/wwsj/uncategorized/wzorce-projektowe-observer/
